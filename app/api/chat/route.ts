@@ -17,9 +17,9 @@ export async function POST(req: Request) {
     imagePrompt?: string;
   } = await req.json();
 
-  if (generateImage && imagePrompt) {
-    try {
-      // Chamada compatível com o SDK 'ai' atual
+  try {
+    // Se o usuário quer gerar uma imagem
+    if (generateImage && imagePrompt) {
       const imageResult = await model.image.generate({
         prompt: imagePrompt,
         size: "1024x1024",
@@ -28,37 +28,36 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ type: "image", url: imageResult.url }), {
         headers: { "Content-Type": "application/json" },
       });
-    } catch (err) {
-      console.error("Erro ao gerar imagem:", err);
-      return new Response(JSON.stringify({ error: "Erro ao gerar imagem." }), {
-        headers: { "Content-Type": "application/json" },
-      });
     }
-  }
 
-  const result = streamText({
-    model: model.languageModel(selectedModel),
-    system: "você é hiriano, um assistente amigável.",
-    messages: convertToModelMessages(messages),
-    stopWhen: stepCountIs(5),
-    tools: {
-      getWeather: weatherTool,
-    },
-    experimental_telemetry: {
-      isEnabled: false,
-    },
-  });
+    // Caso padrão: gerar texto
+    const textResult = streamText({
+      model: model.languageModel(selectedModel),
+      system: "Você é Hiriano, um assistente amigável.",
+      messages: convertToModelMessages(messages),
+      stopWhen: stepCountIs(5),
+      tools: {
+        getWeather: weatherTool,
+      },
+      experimental_telemetry: {
+        isEnabled: false,
+      },
+    });
 
-  return result.toUIMessageStreamResponse({
-    sendReasoning: true,
-    onError: (error) => {
-      if (error instanceof Error) {
-        if (error.message.includes("Rate limit")) {
+    return textResult.toUIMessageStreamResponse({
+      sendReasoning: true,
+      onError: (error) => {
+        console.error(error);
+        if (error instanceof Error && error.message.includes("Rate limit")) {
           return "Rate limit exceeded. Please try again later.";
         }
-      }
-      console.error(error);
-      return "An error occurred.";
-    },
-  });
+        return "An error occurred.";
+      },
+    });
+  } catch (err) {
+    console.error("Erro no endpoint:", err);
+    return new Response(JSON.stringify({ error: "Erro ao processar a requisição." }), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
