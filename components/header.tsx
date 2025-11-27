@@ -1,52 +1,53 @@
+"use client";
+
 import Link from "next/link";
-import { DeployButton } from "./deploy-button";
-import { GroqIcon } from "./icons";
+import { GroqIcon } from "./icons"; // opcional: remove se não usar
 
 export const Header = () => {
   return (
-    <div className="fixed right-0 left-0 w-full top-0 bg-white dark:bg-zinc-950">
-      <div className="flex justify-between items-center p-4">
-        <div className="flex flex-row items-center gap-2 shrink-0 ">
-          <span className="jsx-e3e12cc6f9ad5a71 flex flex-row items-center gap-2 home-links">
-
-            <Link
-              className="text-zinc-800 dark:text-zinc-100 -translate-y-[.5px]"
-              rel="noopener"
-              target="_blank"
-              href="https://vercel.com/"
-            >
-              <svg
-                data-testid="geist-icon"
-                height={18}
-                strokeLinejoin="round"
-                viewBox="0 0 16 16"
-                width={18}
-                style={{ color: "currentcolor" }}
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8 1L16 15H0L8 1Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </Link>
-
-            {/* TRAÇO REMOVIDO AQUI */}
-
-            <div className="jsx-e3e12cc6f9ad5a71 flex flex-row items-center gap-4">
-              <Link className="flex flex-row items-end gap-2" target="_blank" href="https://groq.com">
-                <GroqIcon size={32} />
-              </Link>
-            </div>
-
+    <header className="fixed top-0 left-0 right-0 w-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-50">
+      <div className="max-w-4xl mx-auto flex items-center justify-between py-3 px-4">
+        
+        {/* LOGO + NOME (estilo ChatGPT Pro) */}
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-sm font-bold shadow">
+            H
+          </div>
+          <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            Hiriano AI
           </span>
         </div>
 
-        <div className="flex flex-row items-center gap-2 shrink-0">
-          <DeployButton />
-        </div>
+        {/* LINKS DO LADO DIREITO */}
+        <nav className="flex items-center gap-4 text-sm">
+          <Link
+            href="#"
+            className="text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition"
+          >
+            Atualizações
+          </Link>
+          <Link
+            href="#"
+            className="text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition"
+          >
+            Modelos
+          </Link>
+          <Link
+            href="#"
+            className="text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition"
+          >
+            Documentação
+          </Link>
+
+          {/* Botão estilo ChatGPT */}
+          <Link
+            href="#"
+            className="px-4 py-1.5 rounded-lg bg-black text-white dark:bg-white dark:text-black font-medium hover:opacity-80 transition"
+          >
+            Entrar
+          </Link>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 };
