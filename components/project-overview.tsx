@@ -1,5 +1,31 @@
 import NextLink from "next/link";
 
+/* Cartões estilo ChatGPT */
+const SuggestionCard = ({ text }: { text: string }) => (
+  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer">
+    <p className="text-sm text-zinc-800 dark:text-zinc-100">{text}</p>
+  </div>
+);
+
+/* Link moderno */
+const ExternalLink = ({
+  children,
+  href,
+}: {
+  children: React.ReactNode;
+  href: string;
+}) => {
+  return (
+    <NextLink
+      target="_blank"
+      className="text-blue-500 hover:text-blue-600 transition-colors duration-75"
+      href={href}
+    >
+      {children}
+    </NextLink>
+  );
+};
+
 export const ProjectOverview = () => {
   return (
     <div className="flex flex-col items-center justify-end">
@@ -20,29 +46,3 @@ export const ProjectOverview = () => {
     </div>
   );
 };
-
-/* Componente de link */
-const Link = ({
-  children,
-  href,
-}: {
-  children: React.ReactNode;
-  href: string;
-}) => {
-  return (
-    <NextLink
-      target="_blank"
-      className="text-blue-500 hover:text-blue-600 transition-colors duration-75"
-      href={href}
-    >
-      {children}
-    </NextLink>
-  );
-};
-
-/* Cartões estilo ChatGPT */
-const SuggestionCard = ({ text }: { text: string }) => (
-  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer">
-    <p className="text-sm text-zinc-800 dark:text-zinc-100">{text}</p>
-  </div>
-);
