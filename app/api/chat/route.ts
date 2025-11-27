@@ -2,15 +2,14 @@ import { model, modelID } from "@/ai/providers";
 import { weatherTool } from "@/ai/tools";
 import { convertToModelMessages, stepCountIs, streamText, UIMessage } from "ai";
 
-// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const {
     messages,
     selectedModel,
-    generateImage, // novo campo: se true, gera imagem
-    imagePrompt,   // prompt para gerar a imagem
+    generateImage,
+    imagePrompt,
   }: { 
     messages: UIMessage[]; 
     selectedModel: modelID;
@@ -18,15 +17,14 @@ export async function POST(req: Request) {
     imagePrompt?: string;
   } = await req.json();
 
-  // Se o usuário quer gerar uma imagem
   if (generateImage && imagePrompt) {
     try {
-      const imageResult = await model.languageModel(selectedModel).generateImage({
+      // Chamada compatível com o SDK 'ai' atual
+      const imageResult = await model.image.generate({
         prompt: imagePrompt,
         size: "1024x1024",
       });
 
-      // Retorna a URL ou base64 da imagem
       return new Response(JSON.stringify({ type: "image", url: imageResult.url }), {
         headers: { "Content-Type": "application/json" },
       });
@@ -38,7 +36,6 @@ export async function POST(req: Request) {
     }
   }
 
-  // Caso padrão: gerar texto
   const result = streamText({
     model: model.languageModel(selectedModel),
     system: "você é hiriano, um assistente amigável.",
