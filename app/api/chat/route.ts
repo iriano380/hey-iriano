@@ -2,65 +2,38 @@ import { model, modelID } from "@/ai/providers";
 import { weatherTool } from "@/ai/tools";
 import { convertToModelMessages, stepCountIs, streamText, UIMessage } from "ai";
 
+// Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   const {
     messages,
     selectedModel,
-    generateImage,
-    imagePrompt,
-  }: { 
-    messages: UIMessage[]; 
-    selectedModel: modelID;
-    generateImage?: boolean;
-    imagePrompt?: string;
-  } = await req.json();
+  }: { messages: UIMessage[]; selectedModel: modelID } = await req.json();
 
-  try {
-    // ⚡ Gerar imagem
-    if (generateImage && imagePrompt) {
-      const imageResult = await model.image.generate({
-        prompt: imagePrompt,
-        size: "1024x1024",
-      });
+  const result = streamText({
+    model: model.languageModel(selectedModel),
+    system: "Você é Iriano, és um assistente amigável para tudo.",
+    messages: convertToModelMessages(messages),
+    stopWhen: stepCountIs(5), // enable multi-step agentic flow
+    tools: {
+      getWeather: weatherTool,
+    },
+    experimental_telemetry: {
+      isEnabled: false,
+    },
+  });
 
-      return new Response(
-        JSON.stringify({ type: "image", url: imageResult.url }),
-        { headers: { "Content-Type": "application/json" } }
-      );
-    }
-
-    // ⚡ Gerar texto
-    const result = streamText({
-      model: model.languageModel(selectedModel),
-      system: "Você é Hiriano, um assistente amigável.",
-      messages: convertToModelMessages(messages),
-      stopWhen: stepCountIs(5),
-      tools: {
-        getWeather: weatherTool,
-      },
-      experimental_telemetry: {
-        isEnabled: false,
-      },
-    });
-
-    return result.toUIMessageStreamResponse({
-      sendReasoning: true,
-      onError: (error) => {
-        console.error(error);
-        if (error instanceof Error && error.message.includes("Rate limit")) {
+  return result.toUIMessageStreamResponse({
+    sendReasoning: true,
+    onError: (error) => {
+      if (error instanceof Error) {
+        if (error.message.includes("Rate limit")) {
           return "Rate limit exceeded. Please try again later.";
         }
-        return "An error occurred.";
-      },
-    });
-
-  } catch (err) {
-    console.error("Erro no endpoint:", err);
-    return new Response(
-      JSON.stringify({ error: "Erro ao processar a requisição." }),
-      { headers: { "Content-Type": "application/json" } }
-    );
-  }
+      }
+      console.error(error);
+      return "An error occurred.";
+    },
+  });
 }
