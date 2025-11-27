@@ -2,10 +2,10 @@ import NextLink from "next/link";
 
 export const ProjectOverview = () => {
   const suggestions = [
-    "Cria uma imagem futurista do Hiriano",
-    "Explica-me como funciona a IA Groq",
-    "Dá-me ideias para melhorar o meu chatbot",
-    "Escreve um texto profissional para o meu site"
+    "100% gratuito para uso completo IA",
+    "Actualizações acontecem diariamente",
+    "Suporte 24horas para qualquer ocasião",
+    "Criada pela IrianoCreative Studios..."
   ];
 
   // função dispara pergunta como o ChatGPT
