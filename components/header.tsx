@@ -4,52 +4,60 @@ import { GroqIcon } from "./icons";
 
 export const Header = () => {
   return (
-    <header className="fixed top-4 left-4 right-4 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 z-50 rounded-2xl shadow-md">
-      <div className="max-w-5xl mx-auto flex items-center justify-between p-4">
-        {/* lado esquerdo: logo + nome */}
-        <div className="flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-3" aria-label="Home">
-            {/* SVG do triângulo */}
-            <svg
-              data-testid="geist-icon"
-              height={20}
-              width={20}
-              viewBox="0 0 16 16"
-              style={{ color: "currentcolor" }}
-              aria-hidden
+    <div className="fixed right-0 left-0 w-full top-0 bg-white dark:bg-zinc-950">
+      <div className="flex justify-between items-center p-4">
+        <div className="flex flex-row items-center gap-2 shrink-0 ">
+          <span className="jsx-e3e12cc6f9ad5a71 flex flex-row items-center gap-2 home-links">
+            <Link
+              className="text-zinc-800 dark:text-zinc-100 -translate-y-[.5px]"
+              rel="noopener"
+              target="_blank"
+              href="https://vercel.com/"
             >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M8 1L16 15H0L8 1Z"
-                fill="currentColor"
-              />
-            </svg>
-
-            <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 select-none">
-              Hiriano
-            </span>
-          </Link>
+              <svg
+                data-testid="geist-icon"
+                height={18}
+                strokeLinejoin="round"
+                viewBox="0 0 16 16"
+                width={18}
+                style={{ color: "currentcolor" }}
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M8 1L16 15H0L8 1Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </Link>
+            <div className="jsx-e3e12cc6f9ad5a71 w-4 text-lg text-center text-zinc-300 dark:text-zinc-600">
+              <svg
+                data-testid="geist-icon"
+                height={16}
+                strokeLinejoin="round"
+                viewBox="0 0 16 16"
+                width={16}
+                style={{ color: "currentcolor" }}
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M4.01526 15.3939L4.3107 14.7046L10.3107 0.704556L10.6061 0.0151978L11.9849 0.606077L11.6894 1.29544L5.68942 15.2954L5.39398 15.9848L4.01526 15.3939Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <div className="jsx-e3e12cc6f9ad5a71 flex flex-row items-center gap-4">
+              <Link className="flex flex-row items-end gap-2" target="_blank" href="https://groq.com">
+                <GroqIcon size={32} />
+              </Link>
+            </div>
+          </span>
         </div>
-
-        {/* espaço flexível */}
-        <div className="flex-1" />
-
-        {/* lado direito: Groq + DeployButton */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="https://groq.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2"
-            aria-label="Groq"
-          >
-            <GroqIcon size={28} />
-          </Link>
-
+        <div className="flex flex-row items-center gap-2 shrink-0">
           <DeployButton />
         </div>
       </div>
-    </header>
+    </div>
   );
 };
