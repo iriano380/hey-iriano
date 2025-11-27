@@ -22,6 +22,6 @@ export const DeployButton = () => (
         fill="currentColor"
       />
     </svg>
-    Juntar me
+    Menu
   </Link>
 );
