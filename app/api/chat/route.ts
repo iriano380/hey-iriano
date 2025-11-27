@@ -6,19 +6,22 @@ import { convertToModelMessages, stepCountIs, streamText, streamImage, UIMessage
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages, selectedModel, generateImage }: { 
-    messages: UIMessage[]; 
-    selectedModel: modelID;
-    generateImage?: boolean; // nova flag
-  } = await req.json();
+  const {
+    messages,
+    selectedModel,
+    generateImage, // nova flag opcional
+  }: { messages: UIMessage[]; selectedModel: modelID; generateImage?: boolean } =
+    await req.json();
 
   if (generateImage) {
     // GERAR IMAGEM
     const result = streamImage({
-      model: model.imageModel(selectedModel), // modelo de imagem
-      prompt: messages.map(m => m.content).join("\n"), // combina todas as mensagens como prompt
-      size: "1024x1024", // ou "512x512", "256x256"
-      experimental_telemetry: { isEnabled: false },
+      model: model.imageModel(selectedModel),
+      prompt: messages.map((m) => m.content).join("\n"),
+      size: "1024x1024",
+      experimental_telemetry: {
+        isEnabled: false,
+      },
     });
 
     return result.toUIMessageStreamResponse({
@@ -33,9 +36,13 @@ export async function POST(req: Request) {
       model: model.languageModel(selectedModel),
       system: "você é hiriano, um assistente amigável.",
       messages: convertToModelMessages(messages),
-      stopWhen: stepCountIs(5),
-      tools: { getWeather: weatherTool },
-      experimental_telemetry: { isEnabled: false },
+      stopWhen: stepCountIs(5), // enable multi-step agentic flow
+      tools: {
+        getWeather: weatherTool,
+      },
+      experimental_telemetry: {
+        isEnabled: false,
+      },
     });
 
     return result.toUIMessageStreamResponse({
