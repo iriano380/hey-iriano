@@ -3,7 +3,7 @@ import {
   customProvider,
   extractReasoningMiddleware,
   wrapLanguageModel,
-  wrapImageModel,
+  ImageModel, // ⚡ usar isso no lugar de wrapImageModel
 } from "ai";
 
 // Modelos de texto
@@ -12,17 +12,11 @@ const languageModels = {
   "meta-llama/llama-4-scout-17b-16e-instruct": groq(
     "meta-llama/llama-4-scout-17b-16e-instruct"
   ),
-  "llama-3.1-8b-instant": groq("llama-3.1-8b-instant"),
-  "deepseek-r1-distill-llama-70b": wrapLanguageModel({
-    middleware: extractReasoningMiddleware({ tagName: "think" }),
-    model: groq("deepseek-r1-distill-llama-70b"),
-  }),
-  "llama-3.3-70b-versatile": groq("llama-3.3-70b-versatile"),
 };
 
 // Modelos de imagem
 const imageModels = {
-  "dalle-mini": wrapImageModel({
+  "dalle-mini": new ImageModel({
     model: groq("openai/dalle-mini"),
   }),
 };
