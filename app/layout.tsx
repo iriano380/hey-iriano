@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bem vindo sou Hey hiriano",
+  title: "Hey hiriano",
   description:
-    "Eu sou o seu assistente virtual criada pela IrianoCreative Studio e ficarei muito honrado em ajudar lhe na sua jornada",
+    "Seu assistante virtuail",
 };
 
 export default function RootLayout({
