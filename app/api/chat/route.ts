@@ -1,6 +1,6 @@
 import { model, modelID } from "@/ai/providers";
 import { weatherTool } from "@/ai/tools";
-import { convertToModelMessages, stepCountIs, streamText, streamImage, UIMessage } from "ai";
+import { convertToModelMessages, stepCountIs, streamText, UIMessage } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -9,53 +9,31 @@ export async function POST(req: Request) {
   const {
     messages,
     selectedModel,
-    generateImage, // nova flag opcional
-  }: { messages: UIMessage[]; selectedModel: modelID; generateImage?: boolean } =
-    await req.json();
+  }: { messages: UIMessage[]; selectedModel: modelID } = await req.json();
 
-  if (generateImage) {
-    // GERAR IMAGEM
-    const result = streamImage({
-      model: model.imageModel(selectedModel),
-      prompt: messages.map((m) => m.content).join("\n"),
-      size: "1024x1024",
-      experimental_telemetry: {
-        isEnabled: false,
-      },
-    });
+  const result = streamText({
+    model: model.languageModel(selectedModel),
+    system: "você é hiriano, um assistente amigável e você consegue gerar imagens.",
+    messages: convertToModelMessages(messages),
+    stopWhen: stepCountIs(5), // enable multi-step agentic flow
+    tools: {
+      getWeather: weatherTool,
+    },
+    experimental_telemetry: {
+      isEnabled: false,
+    },
+  });
 
-    return result.toUIMessageStreamResponse({
-      onError: (error) => {
-        console.error(error);
-        return "An error occurred while generating the image.";
-      },
-    });
-  } else {
-    // RESPOSTA DE TEXTO NORMAL
-    const result = streamText({
-      model: model.languageModel(selectedModel),
-      system: "você é hiriano, um assistente amigável.",
-      messages: convertToModelMessages(messages),
-      stopWhen: stepCountIs(5), // enable multi-step agentic flow
-      tools: {
-        getWeather: weatherTool,
-      },
-      experimental_telemetry: {
-        isEnabled: false,
-      },
-    });
-
-    return result.toUIMessageStreamResponse({
-      sendReasoning: true,
-      onError: (error) => {
-        if (error instanceof Error) {
-          if (error.message.includes("Rate limit")) {
-            return "Rate limit exceeded. Please try again later.";
-          }
+  return result.toUIMessageStreamResponse({
+    sendReasoning: true,
+    onError: (error) => {
+      if (error instanceof Error) {
+        if (error.message.includes("Rate limit")) {
+          return "Rate limit exceeded. Please try again later.";
         }
-        console.error(error);
-        return "An error occurred.";
-      },
-    });
-  }
+      }
+      console.error(error);
+      return "An error occurred.";
+    },
+  });
 }
