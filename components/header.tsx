@@ -4,12 +4,12 @@ import { GroqIcon } from "./icons";
 
 export const Header = () => {
   return (
-    <header className="fixed top-4 left-4 right-4 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 z-50 rounded-2xl shadow-md">
-      <div className="max-w-5xl mx-auto flex items-center justify-between p-4">
+    <header className="fixed top-0 left-0 right-0 w-full bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800 z-50">
+      <div className="max-w-5xl mx-auto flex items-center justify-between p-3 px-4">
         {/* lado esquerdo: logo + nome */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3" aria-label="Home">
-            {/* SVG do triângulo */}
+            {/* mantém o SVG (triângulo) — podes trocar se quiseres */}
             <svg
               data-testid="geist-icon"
               height={20}
@@ -32,10 +32,10 @@ export const Header = () => {
           </Link>
         </div>
 
-        {/* espaço flexível */}
+        {/* centro (espaço flexível) */}
         <div className="flex-1" />
 
-        {/* lado direito: Groq + DeployButton */}
+        {/* lado direito: ícone Groq (importado) + botão Deploy */}
         <div className="flex items-center gap-3">
           <Link
             href="https://groq.com"
@@ -47,7 +47,10 @@ export const Header = () => {
             <GroqIcon size={28} />
           </Link>
 
-          <DeployButton />
+          {/* botão já existente */}
+          <div>
+            <DeployButton />
+          </div>
         </div>
       </div>
     </header>
