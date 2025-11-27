@@ -5,9 +5,9 @@ export const ProjectOverview = () => {
       <h1 className="text-3xl font-semibold mb-4">Em que posso ajudar?</h1>
       <p className="text-center">
         Sou Iriano IA (inteligência artificial criada pela <Link href="https://groq.com/">IrianoCreative</Link>{" "}
-        with the <Link href="https://sdk.vercel.ai/docs">AI SDK</Link> via the{" "}
+        com a <Link href="https://sdk.vercel.ai/docs">WangaChat</Link> Em{" "}
         <Link href="https://vercel.com/marketplace/groq">
-          Vercel Marketplace
+          Tecnologias de moçambique
         </Link>
         .
       </p>
