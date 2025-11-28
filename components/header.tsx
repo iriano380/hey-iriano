@@ -3,7 +3,7 @@ import { DeployButton } from "./deploy-button";
 
 export const Header = () => {
   return (
-    <div className="fixed right-0 left-0 w-full top-0 bg-white dark:bg-zinc-950 shadow-sm">
+    <div className="fixed right-0 left-0 w-full top-0 bg-transparent shadow-sm z-50">
       <div className="flex justify-between items-center p-4">
         {/* Logo */}
         <div className="flex flex-row items-center gap-2 shrink-0">
