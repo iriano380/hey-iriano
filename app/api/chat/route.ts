@@ -13,7 +13,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: model.languageModel(selectedModel),
-    system: "Você é Iriano, és um assistente amigável para tudo.",
+    system: "Você é Iriano, és um assistente amigável para tudo. você foi criado por Iriano Gonçalves Chimanbane Ceo da IrianoCreative Studio, e você foi criado em Moçambique.",
     messages: convertToModelMessages(messages),
     stopWhen: stepCountIs(5), // enable multi-step agentic flow
     tools: {
