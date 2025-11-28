@@ -18,8 +18,8 @@ export const Header = () => {
         width: collapsed ? "80px" : "400px", // largura animada
       }}
     >
-      {/* Logo sempre visível */}
-      <Link href="/" className="flex items-center px-4 py-2">
+      {/* Logo sempre visível, tamanho constante */}
+      <Link href="/" className="flex items-center px-4 py-2 shrink-0">
         <img
           src="https://i.ibb.co/JFwJsK86/IMG-20250128-WA0048.jpg"
           alt="Logo"
@@ -27,14 +27,14 @@ export const Header = () => {
         />
       </Link>
 
-      {/* Conteúdo completo (botão) */}
+      {/* Botão de assistência, visível apenas quando expandido */}
       {!collapsed && (
         <div className="flex items-center gap-2 ml-auto pr-4 transition-opacity duration-500">
           <DeployButton />
         </div>
       )}
 
-      {/* Botão para expandir quando está encolhido */}
+      {/* Botão moderno de expandir, visível apenas quando colapsado */}
       {collapsed && (
         <button
           onClick={() => setCollapsed(false)}
