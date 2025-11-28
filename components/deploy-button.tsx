@@ -19,7 +19,7 @@ export const DeployButton = () => (
         fillRule="evenodd"
         clipRule="evenodd"
         d="M8 1L16 15H0L8 1Z"
-        fill="currentColor"
+        fill="#212832"
       />
     </svg>
     Novo chat
