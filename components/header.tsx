@@ -4,21 +4,27 @@ import { DeployButton } from "./deploy-button";
 export const Header = () => {
   return (
     <>
-      {/* Nuvem branca atrás do cabeçalho */}
-      <div
-        className="
-          fixed top-0 left-0 right-0 
-          h-20 
-          bg-white/50 dark:bg-zinc-900/40 
-          backdrop-blur-xl 
-          pointer-events-none
-          z-30
-        "
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))",
-        }}
-      />
+      {/* Nuvem branca atrás do cabeçalho (agora estendida para baixo) */}
+<div
+  className="
+    fixed top-0 left-0 right-0
+    h-40        /* aumentei de 20 para 40 */
+    bg-white/50 dark:bg-zinc-900/40
+    backdrop-blur-xl
+    pointer-events-none
+    z-30
+  "
+  style={{
+    maskImage: `
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,1) 35%,
+        rgba(0,0,0,0) 100%
+      )
+    `,
+  }}
+/>
 
       {/* Cabeçalho real acima das nuvens */}
       <div
