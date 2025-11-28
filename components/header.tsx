@@ -2,7 +2,6 @@
 
 import { DeployButton } from "./deploy-button";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
 export const Header = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -25,23 +24,23 @@ export const Header = () => {
   }, [autoCollapsedOnce]);
 
   const toggleBar = () => {
-    setCollapsed((prev) => !prev);
+    setCollapsed((s) => !s);
     setShowMessage(false);
   };
 
   return (
     <>
-      {/* Mensagem flutuante */}
+      {/* Mensagem */}
       {showMessage && (
         <div
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] rounded-lg px-4 py-2 text-white shadow-lg transition-opacity duration-300"
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] rounded-lg px-4 py-2 text-white shadow-lg"
           style={{ backgroundColor: "#212832" }}
         >
           Clique no ícone para expandir a barra
         </div>
       )}
 
-      {/* Barra principal */}
+      {/* Header */}
       <div
         className="fixed right-0 left-0 top-4 mx-4 rounded-xl bg-white/30 dark:bg-zinc-950/30 backdrop-blur-md shadow-lg z-50 border transition-all duration-500 ease-in-out overflow-hidden"
         style={{
@@ -54,7 +53,7 @@ export const Header = () => {
             collapsed ? "justify-start py-2" : "justify-between py-2"
           }`}
         >
-          {/* LOGO — sempre visível e sempre clicável */}
+          {/* Logo (CLICÁVEL SEM PROBLEMA) */}
           <button
             onClick={toggleBar}
             className="flex items-center cursor-pointer bg-transparent border-0 p-0"
@@ -66,12 +65,10 @@ export const Header = () => {
             />
           </button>
 
-          {/* Botão — desaparece quando encolhe */}
+          {/* Botão (desaparece quando encolhe) */}
           {!collapsed && (
-            <div className="flex items-center gap-2 transition-all duration-300">
-              <div className="transition-transform duration-200 hover:scale-105">
-                <DeployButton />
-              </div>
+            <div className="transition-transform duration-200 hover:scale-105">
+              <DeployButton />
             </div>
           )}
         </div>
