@@ -13,13 +13,13 @@ export const DeployButton = () => (
       strokeLinejoin="round"
       viewBox="0 0 16 16"
       width={14}
-      style={{ color: "#212832" }}
+      style={{ color: "currentcolor" }}
     >
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M8 1L16 15H0L8 1Z"
-        fill="currentColor"
+        fill="#212832"
       />
     </svg>
     Novo chat
