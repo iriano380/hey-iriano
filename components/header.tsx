@@ -1,80 +1,83 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import { DeployButton } from "./deploy-button";
-import { Menu } from "lucide-react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export const Header = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [showHint, setShowHint] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [autoCollapsedOnce, setAutoCollapsedOnce] = useState(false);
 
-  // Encolher automaticamente após 5 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
       setCollapsed(true);
-      setShowHint(true);
+
+      if (!autoCollapsedOnce) {
+        setShowMessage(true);
+        setAutoCollapsedOnce(true);
+
+        setTimeout(() => setShowMessage(false), 4000);
+      }
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [autoCollapsedOnce]);
 
   const toggleBar = () => {
     setCollapsed((prev) => !prev);
-
-    if (showHint) setShowHint(false);
+    setShowMessage(false);
   };
 
   return (
-    <div
-      className={`fixed right-0 left-0 top-4 mx-4 rounded-xl bg-white/30 
-        dark:bg-zinc-950/30 backdrop-blur-md shadow-lg z-50 border 
-        transition-all duration-500`}
-      style={{ borderColor: "#212832" }}
-    >
-      <div
-        className={`flex items-center py-2 px-4 transition-all duration-500 ${
-          collapsed ? "justify-start" : "justify-between"
-        }`}
-      >
-        {/* Logo – sempre visível e clicável */}
+    <>
+      {/* Mensagem flutuante */}
+      {showMessage && (
         <div
-          className="flex flex-row items-center gap-2 shrink-0 cursor-pointer"
-          onClick={toggleBar}
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] rounded-lg px-4 py-2 text-white shadow-lg transition-opacity duration-300"
+          style={{ backgroundColor: "#212832" }}
         >
-          <Image
-            src="https://i.ibb.co/JFwJsK86/IMG-20250128-WA0048.jpg"
-            alt="Logo"
-            width={45}
-            height={45}
-            className="h-10 w-auto object-contain"
-          />
-        </div>
-
-        {/* Botão quando expandido */}
-        {!collapsed && (
-          <div className="flex flex-row items-center gap-2 shrink-0 transition-transform duration-200 hover:scale-105">
-            <DeployButton />
-          </div>
-        )}
-
-        {/* Ícone quando encolhido */}
-        {collapsed && (
-          <button
-            onClick={toggleBar}
-            className="ml-3 p-2 rounded-full hover:bg-white/20 transition"
-          >
-            <Menu size={22} />
-          </button>
-        )}
-      </div>
-
-      {/* Mensagem ao encolher pela primeira vez */}
-      {collapsed && showHint && (
-        <div className="absolute right-2 top-full mt-2 bg-[#212832] text-white text-sm px-3 py-1 rounded-lg shadow-lg">
           Clique no ícone para expandir a barra
         </div>
       )}
-    </div>
+
+      {/* Barra principal */}
+      <div
+        className="fixed right-0 left-0 top-4 mx-4 rounded-xl bg-white/30 dark:bg-zinc-950/30 backdrop-blur-md shadow-lg z-50 border transition-all duration-500 ease-in-out overflow-hidden"
+        style={{
+          borderColor: "#212832",
+          width: collapsed ? "95px" : "calc(100% - 2rem)",
+        }}
+      >
+        <div
+          className={`flex items-center px-4 transition-all duration-500 ${
+            collapsed ? "justify-start py-2" : "justify-between py-2"
+          }`}
+        >
+          {/* LOGO — sempre visível e sempre clicável */}
+          <button
+            onClick={toggleBar}
+            className="flex items-center cursor-pointer bg-transparent border-0 p-0"
+          >
+            <img
+              src="https://i.ibb.co/JFwJsK86/IMG-20250128-WA0048.jpg"
+              alt="Logo"
+              className="h-10 w-auto object-contain"
+            />
+          </button>
+
+          {/* Botão — desaparece quando encolhe */}
+          {!collapsed && (
+            <div className="flex items-center gap-2 transition-all duration-300">
+              <div className="transition-transform duration-200 hover:scale-105">
+                <DeployButton />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
+
+export default Header;
