@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { DeployButton } from "./deploy-button";
-import { CustomLogo } from "./icons";
+import { CustomLogo } from "./icons/CustomLogo";
 
 export const Header = () => {
   return (
