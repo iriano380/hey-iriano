@@ -4,27 +4,23 @@ import { DeployButton } from "./deploy-button";
 export const Header = () => {
   return (
     <>
-      {/* Nuvem branca horizontal por trás do cabeçalho */}
+      {/* Nuvem branca atrás do cabeçalho */}
       <div
         className="
-          fixed 
-          top-0 left-0 right-0 
-          h-24 
-          bg-white/30 
-          dark:bg-white/5
+          fixed top-0 left-0 right-0 
+          h-20 
+          bg-white/50 dark:bg-zinc-900/40 
           backdrop-blur-xl 
-          opacity-80 
-          z-40 
           pointer-events-none
+          z-30
         "
         style={{
-          maskImage: "linear-gradient(to bottom, white 40%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, white 40%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))",
         }}
       />
 
-      {/* CABEÇALHO */}
+      {/* Cabeçalho real acima das nuvens */}
       <div
         className="fixed right-0 left-0 top-4 mx-4 rounded-xl bg-white/30 dark:bg-zinc-950/30 backdrop-blur-md shadow-lg z-50 border"
         style={{ borderColor: "#212832" }}
@@ -41,7 +37,7 @@ export const Header = () => {
             </Link>
           </div>
 
-          {/* Botão de Assistência */}
+          {/* Botão */}
           <div className="flex flex-row items-center gap-2 shrink-0">
             <div className="transition-transform duration-200 hover:scale-105">
               <DeployButton />
