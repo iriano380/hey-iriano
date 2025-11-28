@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { DeployButton } from "./deploy-button";
 import { Menu } from "lucide-react";
 
@@ -22,7 +22,6 @@ export const Header = () => {
   const toggleBar = () => {
     setCollapsed((prev) => !prev);
 
-    // Esconder aviso quando expandir
     if (showHint) setShowHint(false);
   };
 
@@ -38,26 +37,28 @@ export const Header = () => {
           collapsed ? "justify-start" : "justify-between"
         }`}
       >
-        {/* LOGO – sempre visível e clicável */}
+        {/* Logo – sempre visível e clicável */}
         <div
           className="flex flex-row items-center gap-2 shrink-0 cursor-pointer"
           onClick={toggleBar}
         >
-          <img
+          <Image
             src="https://i.ibb.co/JFwJsK86/IMG-20250128-WA0048.jpg"
             alt="Logo"
+            width={45}
+            height={45}
             className="h-10 w-auto object-contain"
           />
         </div>
 
-        {/* Botão apenas quando NÃO está colapsado */}
+        {/* Botão quando expandido */}
         {!collapsed && (
           <div className="flex flex-row items-center gap-2 shrink-0 transition-transform duration-200 hover:scale-105">
             <DeployButton />
           </div>
         )}
 
-        {/* Ícone de expandir quando está colapsado */}
+        {/* Ícone quando encolhido */}
         {collapsed && (
           <button
             onClick={toggleBar}
@@ -68,7 +69,7 @@ export const Header = () => {
         )}
       </div>
 
-      {/* Mensagem de instrução quando colapsa pela primeira vez */}
+      {/* Mensagem ao encolher pela primeira vez */}
       {collapsed && showHint && (
         <div className="absolute right-2 top-full mt-2 bg-[#212832] text-white text-sm px-3 py-1 rounded-lg shadow-lg">
           Clique no ícone para expandir a barra
