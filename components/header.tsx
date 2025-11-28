@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { DeployButton } from "./deploy-button";
-import { GroqIcon } from "./icons";
+import { CustomLogo } from "./icons";
 
 export const Header = () => {
   return (
@@ -49,7 +49,7 @@ export const Header = () => {
             </div>
             <div className="jsx-e3e12cc6f9ad5a71 flex flex-row items-center gap-4">
               <Link className="flex flex-row items-end gap-2" target="_blank" href="https://groq.com">
-                <GroqIcon size={32} />
+                <CustomLogo size={32} />
               </Link>
             </div>
           </span>
