@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Header } from "@/components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Hey hiriano",
-  description: "Seu assistante virtuail",
+  title: "Vercel x Groq Chatbot",
+  description:
+    "This starter project uses Groq with the AI SDK via the Vercel Marketplace",
 };
 
 export default function RootLayout({
@@ -25,24 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
-      <head>
-        {/* RemixIcon CDN (funciona sem instalar nada) */}
-        <link
-          href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
-          rel="stylesheet"
-        />
-      </head>
-
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Cabeçalho */}
-        <Header />
-
-        {/* Conteúdo */}
-        <main className="pt-20">{children}</main>
-
+        {children}
         <Toaster />
       </body>
     </html>
