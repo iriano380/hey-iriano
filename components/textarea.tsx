@@ -1,3 +1,5 @@
+// components/chat/Textarea.tsx
+
 import { modelID } from "@/ai/providers";
 import { Textarea as ShadcnTextarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
@@ -25,15 +27,15 @@ export const Textarea = ({
   return (
     <div className="w-full fixed bottom-0 left-0 right-0 px-4 pb-4 z-[60] bg-gradient-to-t from-background/80 to-background/0 backdrop-blur-md">
 
-      {/* Modelo — estilo ChatGPT */}
+      {/* Modelo */}
       <div className="mb-2 flex justify-center">
         <ModelPicker
-          setSelectedModel={setSelectedModel}
           selectedModel={selectedModel}
+          setSelectedModel={setSelectedModel}
         />
       </div>
 
-      {/* Caixa estilo cápsula */}
+      {/* Barra estilo ChatGPT */}
       <div className="relative max-w-3xl mx-auto">
         <ShadcnTextarea
           className="
@@ -64,7 +66,7 @@ export const Textarea = ({
           }}
         />
 
-        {/* Botão enviar / stop (igual ao ChatGPT) */}
+        {/* Botão enviar / stop */}
         {status === "streaming" || status === "submitted" ? (
           <button
             type="button"
