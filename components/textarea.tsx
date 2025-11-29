@@ -23,27 +23,26 @@ export const Textarea = ({
   setSelectedModel,
 }: InputProps) => {
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-primary/90 backdrop-blur-md p-4 z-50 shadow-lg flex items-end gap-2">
+    <div className="fixed bottom-0 left-0 w-full bg-primary/90 backdrop-blur-md p-4 z-50 flex items-end gap-2 shadow-lg">
       <div className="flex-1 relative">
         <ShadcnTextarea
           className="resize-none w-full rounded-2xl pr-12 pt-4 pb-16 bg-secondary/90 text-white placeholder:text-zinc-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
           value={input}
           autoFocus
           placeholder="Say something..."
-          // @ts-expect-error
+          // @ts-expect-error err
           onChange={handleInputChange}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               if (input.trim() && !isLoading) {
-                // @ts-expect-error
+                // @ts-expect-error err
                 const form = e.target.closest("form");
                 if (form) form.requestSubmit();
               }
             }
           }}
         />
-
         <ModelPicker
           setSelectedModel={setSelectedModel}
           selectedModel={selectedModel}
