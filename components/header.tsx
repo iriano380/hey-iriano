@@ -4,11 +4,11 @@ import { DeployButton } from "./deploy-button";
 export const Header = () => {
   return (
     <>
-      {/* CAMADA 1 — Fundo branco sólido (novo cabeçalho secundário) */}
+      {/* CAMADA 1 — Cabeçalho secundário (fundo branco com mesma altura do principal) */}
       <div
         className="
           fixed top-0 left-0 right-0
-          h-6
+          h-14
           bg-white dark:bg-zinc-900
           z-20
         "
@@ -36,14 +36,14 @@ export const Header = () => {
         }}
       />
 
-      {/* CAMADA 3 — Cabeçalho arredondado real */}
+      {/* CAMADA 3 — Cabeçalho principal arredondado */}
       <div
         className="
           fixed right-0 left-0 top-4 mx-4 rounded-xl
           bg-white/30 dark:bg-zinc-950/30
           backdrop-blur-md shadow-lg z-50 border
         "
-        style={{ borderColor: '#212832' }}
+        style={{ borderColor: "#212832" }}
       >
         <div className="flex justify-between items-center py-2 px-4">
 
@@ -68,8 +68,8 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* EMPURRAR CONTEÚDO — evita que a IA fique escondida atrás do cabeçalho */}
-      <div className="h-32" />
+      {/* Espaço empurrando o conteúdo da IA para baixo */}
+      <div className="h-20" />
     </>
   );
 };
