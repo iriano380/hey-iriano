@@ -25,7 +25,7 @@ export const Textarea = ({
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-3xl z-50 flex items-end gap-3">
       
-      {/* Área de texto com borda */}
+      {/* Área de texto com borda fina e arredondada */}
       <div className="flex-1 relative border border-[#212832] rounded-3xl bg-secondary/90 px-4 py-2 flex items-center gap-2">
         <ShadcnTextarea
           className="resize-none w-full bg-transparent text-white placeholder:text-zinc-400 focus:outline-none focus:ring-0 py-2 pr-10"
@@ -51,12 +51,12 @@ export const Textarea = ({
         />
       </div>
 
-      {/* Botão de envio flutuante */}
+      {/* Botão de envio flutuante com fundo preto */}
       {status === "streaming" || status === "submitted" ? (
         <button
           type="button"
           onClick={stop}
-          className="flex items-center justify-center rounded-full p-3 hover:bg-white/10 transition-colors"
+          className="flex items-center justify-center rounded-full p-3 bg-black hover:bg-zinc-800 transition-colors shadow-md"
         >
           <div className="animate-spin h-5 w-5 text-white">
             <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ export const Textarea = ({
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="flex items-center justify-center rounded-full p-3 hover:bg-white/10 transition-colors"
+          className="flex items-center justify-center rounded-full p-3 bg-black hover:bg-zinc-800 disabled:bg-zinc-700 disabled:opacity-70 transition-colors shadow-md"
         >
           <ArrowUp className="h-5 w-5 text-white" />
         </button>
