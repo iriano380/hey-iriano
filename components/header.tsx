@@ -8,7 +8,7 @@ export const Header = () => {
       <div
         className="
           fixed top-0 left-0 right-0
-          h-16
+          h-6
           bg-white dark:bg-zinc-900
           z-20
         "
