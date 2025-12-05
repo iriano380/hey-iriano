@@ -1,7 +1,8 @@
 import { modelID } from "@/ai/providers";
 import { Textarea as ShadcnTextarea } from "@/components/ui/textarea";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Image as ImageIcon } from "lucide-react";
 import { ModelPicker } from "./model-picker";
+import { useRef } from "react";
 
 interface InputProps {
   input: string;
@@ -11,6 +12,9 @@ interface InputProps {
   stop: () => void;
   selectedModel: modelID;
   setSelectedModel: (model: modelID) => void;
+
+  // ADICIONAR ISTO:
+  handleImageUpload?: (file: File) => void;
 }
 
 export const Textarea = ({
@@ -21,20 +25,40 @@ export const Textarea = ({
   stop,
   selectedModel,
   setSelectedModel,
+
+  handleImageUpload,
 }: InputProps) => {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const openFilePicker = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && handleImageUpload) {
+      handleImageUpload(file);
+    }
+  };
+
   return (
-    <div className="fixed bottom-0 inset-x-0 bg-background w-full pt-4 pb-4 z-50">
+    <div className="relative w-full pt-4">
+
+      {/* ÁREA DE TEXTO */}
       <ShadcnTextarea
-        className="resize-none bg-secondary w-full rounded-2xl pr-12 pt-4 pb-12"
+        className="resize-none bg-secondary w-full rounded-2xl pr-20 pt-4 pb-16"
         value={input}
         autoFocus
         placeholder={"Say something..."}
+        // @ts-expect-error err
         onChange={handleInputChange}
         onKeyDown={(e) => {
           if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             if (input.trim() && !isLoading) {
-              const form = (e.target as HTMLElement).closest("form");
+              const form = e.target.closest("form");
               if (form) form.requestSubmit();
             }
           }
@@ -46,6 +70,25 @@ export const Textarea = ({
         selectedModel={selectedModel}
       />
 
+      {/* INPUT DE IMAGEM OCULTO */}
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        ref={fileInputRef}
+        onChange={onFileChange}
+      />
+
+      {/* BOTÃO DE ENVIAR IMAGEM */}
+      <button
+        type="button"
+        onClick={openFilePicker}
+        className="absolute left-2 bottom-2 p-2 rounded-full bg-black hover:bg-zinc-800 transition-colors"
+      >
+        <ImageIcon className="h-4 w-4 text-white" />
+      </button>
+
+      {/* BOTÃO DE ENVIAR TEXTO */}
       {status === "streaming" || status === "submitted" ? (
         <button
           type="button"
@@ -75,7 +118,7 @@ export const Textarea = ({
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="absolute right-2 bottom-2 rounded-full p-2 bg-black hover:bg-zinc-800 disabled:bg-zinc-300 disabled:dark:bg-zinc-700 dark:disabled:opacity-80 disabled:cursor-not-allowed transition-colors"
+          className="absolute right-2 bottom-2 rounded-full p-2 bg-black hover:bg-zinc-800 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors"
         >
           <ArrowUp className="h-4 w-4 text-white" />
         </button>
