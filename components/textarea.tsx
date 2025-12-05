@@ -23,43 +23,38 @@ export const Textarea = ({
   setSelectedModel,
 }: InputProps) => {
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-3xl z-50 flex items-end gap-3">
-      
-      {/* Área de texto com borda fina e arredondada */}
-      <div className="flex-1 relative border border-[#212832] rounded-3xl bg-secondary/90 px-4 py-2 flex items-center gap-2">
-        <ShadcnTextarea
-          className="resize-none w-full bg-transparent text-white placeholder:text-zinc-400 focus:outline-none focus:ring-0 py-2 pr-10"
-          value={input}
-          autoFocus
-          placeholder="Say something..."
-          // @ts-expect-error err
-          onChange={handleInputChange}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              if (input.trim() && !isLoading) {
-                // @ts-expect-error err
-                const form = e.target.closest("form");
-                if (form) form.requestSubmit();
-              }
+    <div className="relative w-full pt-4">
+      <ShadcnTextarea
+        className="resize-none bg-secondary w-full rounded-2xl pr-12 pt-4 pb-16"
+        value={input}
+        autoFocus
+        placeholder={"Say something..."}
+        // @ts-expect-error err
+        onChange={handleInputChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            if (input.trim() && !isLoading) {
+              // @ts-expect-error err
+              const form = e.target.closest("form");
+              if (form) form.requestSubmit();
             }
-          }}
-        />
-        <ModelPicker
-          setSelectedModel={setSelectedModel}
-          selectedModel={selectedModel}
-        />
-      </div>
+          }
+        }}
+      />
+      <ModelPicker
+        setSelectedModel={setSelectedModel}
+        selectedModel={selectedModel}
+      />
 
-      {/* Botão de envio flutuante com fundo preto */}
       {status === "streaming" || status === "submitted" ? (
         <button
           type="button"
           onClick={stop}
-          className="flex items-center justify-center rounded-full p-3 bg-black hover:bg-zinc-800 transition-colors shadow-md"
+          className="cursor-pointer absolute right-2 bottom-2 rounded-full p-2 bg-black hover:bg-zinc-800 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors"
         >
-          <div className="animate-spin h-5 w-5 text-white">
-            <svg className="h-5 w-5" viewBox="0 0 24 24">
+          <div className="animate-spin h-4 w-4">
+            <svg className="h-4 w-4 text-white" viewBox="0 0 24 24">
               <circle
                 className="opacity-25"
                 cx="12"
@@ -81,9 +76,9 @@ export const Textarea = ({
         <button
           type="submit"
           disabled={isLoading || !input.trim()}
-          className="flex items-center justify-center rounded-full p-3 bg-black hover:bg-zinc-800 disabled:bg-zinc-700 disabled:opacity-70 transition-colors shadow-md"
+          className="absolute right-2 bottom-2 rounded-full p-2 bg-black hover:bg-zinc-800 disabled:bg-zinc-300 disabled:dark:bg-zinc-700 dark:disabled:opacity-80 disabled:cursor-not-allowed transition-colors"
         >
-          <ArrowUp className="h-5 w-5 text-white" />
+          <ArrowUp className="h-4 w-4 text-white" />
         </button>
       )}
     </div>
