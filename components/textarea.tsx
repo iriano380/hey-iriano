@@ -13,7 +13,7 @@ interface InputProps {
   selectedModel: modelID;
   setSelectedModel: (model: modelID) => void;
 
-  // ADICIONAR ISTO:
+  // ADICIONADO:
   handleImageUpload?: (file: File) => void;
 }
 
@@ -25,30 +25,25 @@ export const Textarea = ({
   stop,
   selectedModel,
   setSelectedModel,
-
   handleImageUpload,
 }: InputProps) => {
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const openFilePicker = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    if (fileInputRef.current) fileInputRef.current.click();
   };
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && handleImageUpload) {
-      handleImageUpload(file);
-    }
+    if (file && handleImageUpload) handleImageUpload(file);
   };
 
   return (
     <div className="relative w-full pt-4">
 
-      {/* ÁREA DE TEXTO */}
       <ShadcnTextarea
-        className="resize-none bg-secondary w-full rounded-2xl pr-20 pt-4 pb-16"
+        className="resize-none bg-secondary w-full rounded-2xl pr-12 pt-4 pb-16"
         value={input}
         autoFocus
         placeholder={"Say something..."}
@@ -70,7 +65,7 @@ export const Textarea = ({
         selectedModel={selectedModel}
       />
 
-      {/* INPUT DE IMAGEM OCULTO */}
+      {/* INPUT OCULTO DE IMAGEM */}
       <input
         type="file"
         accept="image/*"
@@ -83,12 +78,12 @@ export const Textarea = ({
       <button
         type="button"
         onClick={openFilePicker}
-        className="absolute left-2 bottom-2 p-2 rounded-full bg-black hover:bg-zinc-800 transition-colors"
+        className="absolute left-2 bottom-2 rounded-full p-2 bg-black hover:bg-zinc-800 transition-colors"
       >
         <ImageIcon className="h-4 w-4 text-white" />
       </button>
 
-      {/* BOTÃO DE ENVIAR TEXTO */}
+      {/* BOTÃO DE STOP / ENVIAR */}
       {status === "streaming" || status === "submitted" ? (
         <button
           type="button"
